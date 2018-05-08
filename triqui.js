@@ -36,10 +36,14 @@ function poner(ev){
     ponerX(this)
     i=1
     arregloX.push(this.classList[1])
+    alumbrar(jugadores,i-1)
+    apagar(jugadores,i)
   }else{
     ponerO(this)
     i=0
     arregloO.push(this.classList[1])
+    alumbrar(jugadores,i+1)
+    apagar(jugadores,i)
   }
 let resultado = ganador(arregloO,arregloX)
 if(resultado == 1){console.log("gano el jugador 1");}
@@ -83,4 +87,19 @@ function tresEnLinea(arreglo,x,y,z){
   if(arreglo.includes(x) && arreglo.includes(y) && arreglo.includes(z)){
     return true
   }else{return false}
+}
+
+function obtenerJugadores(){
+  const jugadores = document.getElementsByClassName('jugador')
+  console.log(jugadores);
+  return jugadores
+}
+const jugadores = obtenerJugadores()
+
+function alumbrar(jugadores,i){
+  jugadores[i].classList.add("verde")
+}
+
+function apagar(jugadores,i){
+  jugadores[i].className = `jugador ${i}`
 }
