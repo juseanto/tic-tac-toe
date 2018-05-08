@@ -41,13 +41,12 @@ function poner(ev){
     i=0
     arregloO.push(this.classList[1])
   }
-console.log(arregloO);
-console.log(arregloX);
 let resultado = ganador(arregloO,arregloX)
 if(resultado == 1){console.log("gano el jugador 1");}
 else if (resultado == 2) {console.log("gano el jugador 2");}
 else if (resultado == 3) {console.log("empate");}
 else if (resultado == 0) {console.log("nadie ha ganado");}
+this.removeEventListener("click",poner)
 }
 
 function ganador(arregloO,arregloX){
