@@ -6,6 +6,7 @@ body{
   display: flex;
   justify-content: center;
   font-size: 300%;
+  margin-bottom: 5px;
 }
 
 #tablero{
@@ -98,3 +99,10 @@ body{
 .cajas{
   font-size: 100px;
 } */
+
+#creador{
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  font-size: 100%;
+}

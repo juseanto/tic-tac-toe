@@ -6,9 +6,28 @@ function obtenerCuadros(){
 }
 const cuadros = obtenerCuadros()
 
+function obtenerJugadores(){
+  const jugadores = document.getElementsByClassName('jugador')
+  console.log(jugadores);
+  return jugadores
+}
+const jugadores = obtenerJugadores()
+
+let arregloX = []
+let arregloO = []
+
 function clickSobreCuadros(cuadros){
-  for (var i = 0; i < cuadros.length; i++) {
-    cuadros[i].addEventListener("click",poner)
+  swal({
+  title: "TIC-TAC-TOE",
+  text: "Bienvenido",
+});
+  arregloO = []
+  arregloX = []
+  alumbrar(jugadores,0)
+  for (let j = 0; j < cuadros.length; j++) {
+    console.log(cuadros[j]);
+    cuadros[j].addEventListener("click",poner)
+    cuadros[j].innerHTML = ""
   }
 }
 clickSobreCuadros(cuadros)
@@ -24,33 +43,41 @@ function ponerO(cuadro){
 }
 
 let i = 0
-let arregloX = []
-let arregloO = []
+
+
 function poner(ev){
   console.log(this);
-  let objeto = {
-    cuadro:this,
-    resultado:i
-  }
   if(i==0){
     ponerX(this)
     i=1
+    alumbrar(jugadores,i)
+    apagar(jugadores,i-1)
     arregloX.push(this.classList[1])
-    alumbrar(jugadores,i-1)
-    apagar(jugadores,i)
   }else{
     ponerO(this)
     i=0
+    alumbrar(jugadores,i)
+    apagar(jugadores,i+1)
     arregloO.push(this.classList[1])
-    alumbrar(jugadores,i+1)
-    apagar(jugadores,i)
   }
 let resultado = ganador(arregloO,arregloX)
-if(resultado == 1){console.log("gano el jugador 1");}
-else if (resultado == 2) {console.log("gano el jugador 2");}
-else if (resultado == 3) {console.log("empate");}
-else if (resultado == 0) {console.log("nadie ha ganado");}
-this.removeEventListener("click",poner)
+if(resultado == 1){
+  swal({
+  title: "Gano el jugador 1",
+}).then((value)=>volverAEmpezar())
+}
+else if (resultado == 2) {
+  swal({
+    title: "Gano el jugador 2",
+  }).then((value)=>volverAEmpezar())
+}
+else if (resultado == 3) {
+  swal({
+    title: "Empate",
+  }).then((value)=>volverAEmpezar())
+}
+else if(resultado == 0){
+this.removeEventListener("click",poner)}
 }
 
 function ganador(arregloO,arregloX){
@@ -89,17 +116,47 @@ function tresEnLinea(arreglo,x,y,z){
   }else{return false}
 }
 
-function obtenerJugadores(){
-  const jugadores = document.getElementsByClassName('jugador')
-  console.log(jugadores);
-  return jugadores
-}
-const jugadores = obtenerJugadores()
-
 function alumbrar(jugadores,i){
   jugadores[i].classList.add("verde")
 }
 
 function apagar(jugadores,i){
   jugadores[i].className = `jugador ${i}`
+}
+
+function  volverAEmpezar(){
+  swal({
+    title: "Volver a jugar?",
+    buttons:{
+      Si: {
+        text: "Si :)",
+      },
+      No: {
+        text: "No :(",
+      }
+    }
+
+}).then((value)=>{
+    switch(value){
+    case "Si":
+    apagar(jugadores,0)
+    apagar(jugadores,1)
+    clickSobreCuadros(cuadros)
+    break;
+
+    case "No":
+    acabarJuego();
+    break;
+    }
+  }
+)}
+
+function acabarJuego(){
+  for (let j = 0; j < cuadros.length; j++) {
+    console.log(cuadros[j]);
+    cuadros[j].removeEventListener("click",poner)
+    cuadros[j].innerHTML = ""
+  }
+  apagar(jugadores,0)
+  apagar(jugadores,1)
 }
